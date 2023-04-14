@@ -1,0 +1,26 @@
+{
+  "dev": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-borderbass-dev-193428-authRole",
+      "UnauthRoleArn": "arn:aws:iam::727253341689:role/amplify-borderbass-dev-193428-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::727253341689:role/amplify-borderbass-dev-193428-authRole",
+      "Region": "us-east-2",
+      "DeploymentBucketName": "amplify-borderbass-dev-193428-deployment",
+      "UnauthRoleName": "amplify-borderbass-dev-193428-unauthRole",
+      "StackName": "amplify-borderbass-dev-193428",
+      "StackId": "arn:aws:cloudformation:us-east-2:727253341689:stack/amplify-borderbass-dev-193428/ea14f4b0-d1ae-11ed-808f-0624798227e5",
+      "AmplifyAppId": "d2fyl2hb6yaqs1"
+    },
+    "categories": {
+      "auth": {
+        "borderbass5aa2eb36": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d2fyl2hb6yaqs1",
+          "type": "manual"
+        }
+      }
+    }
+  }
+}
