@@ -102,7 +102,7 @@ function QuestionnairesList() {
                     aria-label={`Questionnaire: ${questionnaire.name}`}
                     role="button"
                     tabIndex="0"
-                    onClick={(e) => navigate(`../edit/${questionnaire.id}`)}
+                    onClick={(e) => navigate(`../${questionnaire.id}/complete`)}
                   >
                     <ListItemAvatar>
                       <Avatar>{questionnaire.name.charAt(0)}</Avatar>

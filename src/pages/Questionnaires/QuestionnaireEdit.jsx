@@ -1,13 +1,13 @@
-/* eslint-disable */
 import React from 'react';
 import {
-  Box, LinearProgress
+  Box, LinearProgress,
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { useParams, redirect } from 'react-router-dom';
 import { useQuery } from '@apollo/client';
-import { FETCH_QUESTIONNAIRE } from '../../../api/questionnaires';
-import EditForm from './EditForm';
+import { FETCH_QUESTIONNAIRE } from '../../api/questionnaires';
+import EditHeader from './QuestionnaireEdit/EditHeader';
+import EditForm from './QuestionnaireEdit/EditForm';
 
 const Container = styled(Box)({
   display: 'flex',
@@ -15,18 +15,23 @@ const Container = styled(Box)({
   justifyContent: 'center',
   alignItems: 'center',
   margin: '2rem auto',
-  maxWidth: '600px',
+  maxWidth: '1000px',
 });
 
 function QuestionnaireEdit() {
   const { questionnaireId } = useParams();
-  const { data, loading, error } = useQuery(FETCH_QUESTIONNAIRE, { variables: { id: questionnaireId } });
-
-  if (loading) return (
-    <Box sx={{ width: '100%' }}>
-      <LinearProgress />
-    </Box>
+  const { data, loading, error } = useQuery(
+    FETCH_QUESTIONNAIRE,
+    { variables: { id: questionnaireId } },
   );
+
+  if (loading) {
+    return (
+      <Box sx={{ width: '100%' }}>
+        <LinearProgress />
+      </Box>
+    );
+  }
 
   if (error) {
     return (
@@ -39,11 +44,16 @@ function QuestionnaireEdit() {
   }
 
   const { questionnaire } = data;
-  if (!questionnaire) redirect('/home')
+  if (!questionnaire) redirect('/home');
 
   return (
     <Container>
-      <EditForm questionnaire={questionnaire} />
+      <EditHeader questionnaire={questionnaire} />
+      <EditForm
+        questions={questionnaire.questions}
+        order={questionnaire.questionsOrder}
+        questionnaireId={questionnaire.id}
+      />
     </Container>
   );
 }

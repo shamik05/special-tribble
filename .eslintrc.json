@@ -19,6 +19,9 @@
     "rules": {
         "react/jsx-props-no-spreading": "warn",
         "no-nested-ternary": "warn",
-        "no-unused-vars": "warn"
+        "no-unused-vars": "warn",
+        "react/prop-types": "warn",
+        "import/no-extraneous-dependencies": ["warn"],
+        "react/jsx-no-bind": "warn"
     }
 }

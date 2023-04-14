@@ -1,4 +1,5 @@
 import { gql } from '@apollo/client';
+import { FRAGMENT_QUESTIONS } from './questions';
 
 const FRAGMENT_QUESTIONNAIRES = gql`
 fragment FragmentQuestionnaires on borderbass_questionnaires {
@@ -6,17 +7,6 @@ fragment FragmentQuestionnaires on borderbass_questionnaires {
   name
   description
   published
-  updatedAt: updated_at
-  createdAt: created_at
-}`;
-
-const FRAGMENT_QUESTIONS = gql`
-fragment FragmentQuestions on borderbass_questions {
-  id
-  question
-  type
-  options
-  required
   updatedAt: updated_at
   createdAt: created_at
 }`;

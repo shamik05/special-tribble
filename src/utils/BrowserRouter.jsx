@@ -1,10 +1,11 @@
-import * as React from 'react';
+import React from 'react';
 import { createBrowserRouter } from 'react-router-dom';
 import Root from '../pages/Root';
 import ErrorPage from '../pages/ErrorPage';
 import QuestionnairesList from '../pages/Questionnaires/QuestionnairesList';
 import QuestionnaireCreate from '../pages/Questionnaires/QuestionnaireCreate';
-import QuestionForm from '../pages/Questionnaires/Edit/QuestionnaireEdit';
+import QuestionForm from '../pages/Questionnaires/QuestionnaireEdit';
+import QuestionnaireComplete from '../pages/Questionnaires/QuestionnaireComplete';
 
 const router = createBrowserRouter([
   {
@@ -21,8 +22,12 @@ const router = createBrowserRouter([
         element: <QuestionnaireCreate />,
       },
       {
-        path: '/edit/:questionnaireId',
+        path: '/:questionnaireId/edit',
         element: <QuestionForm />,
+      },
+      {
+        path: '/:questionnaireId/complete',
+        element: <QuestionnaireComplete />,
       },
     ],
   },

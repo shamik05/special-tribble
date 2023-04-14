@@ -1,36 +1,29 @@
 import React from 'react';
 import { useForm, Controller } from 'react-hook-form';
 import {
-  Box, Button, TextField,
+  Box, TextField, Paper, Button,
 } from '@mui/material';
-import { Create, ArrowBack } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
+import { Save } from '@mui/icons-material';
 import { useMutation } from '@apollo/client';
-import { useNavigate } from 'react-router-dom';
-import { FETCH_QUESTIONNAIRES, INSERT_QUESTIONNAIRE } from '../../api/questionnaires';
+import { UPDATE_QUESTIONNAIRE } from '../../../api/questionnaires';
 
-const Container = styled(Box)({
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'center',
-  alignItems: 'center',
-  margin: '2rem auto',
-  maxWidth: '600px',
+const QuestionItem = styled(Paper)({
+  padding: '1rem',
+  marginBottom: '1rem',
+  width: '100%',
+  borderTop: '16px solid rgb(103, 58, 183)',
 });
 
-function QuestionnaireCreate() {
-  const navigate = useNavigate();
+function EditHeader({ questionnaire }) {
   const { handleSubmit, control, formState: { isDirty, isValid, isSubmitting } } = useForm({
-    defaultValues: {
-      questionnaireName: 'Untitled Questionnaire',
-      questionnaireDescription: '',
+    values: {
+      questionnaireName: questionnaire?.name,
+      questionnaireDescription: questionnaire?.description,
     },
   });
 
-  const [insertQuestionnaire, { loading, error }] = useMutation(INSERT_QUESTIONNAIRE, {
-    onCompleted: () => { navigate('/home'); },
-    refetchQueries: [{ query: FETCH_QUESTIONNAIRES }],
-  });
+  const [updateQuestionnaire, { loading, error }] = useMutation(UPDATE_QUESTIONNAIRE);
 
   const onSubmit = (data) => {
     const obj = {
@@ -38,8 +31,9 @@ function QuestionnaireCreate() {
       description: data.questionnaireDescription.trim(),
     };
 
-    insertQuestionnaire({
+    updateQuestionnaire({
       variables: {
+        id: questionnaire.id,
         obj,
       },
     });
@@ -47,16 +41,17 @@ function QuestionnaireCreate() {
 
   let buttonText;
   if (error) {
-    buttonText = 'Error during creation';
+    buttonText = 'Error during Save';
   } else if (isSubmitting || loading) {
-    buttonText = 'Creating Questionnaire';
+    buttonText = 'Saving';
   } else {
-    buttonText = 'Create New Questionnaire';
+    buttonText = 'Save';
   }
 
   return (
-    <Container>
-      <form onSubmit={handleSubmit(onSubmit)} style={{ width: '100%' }}>
+    <form onSubmit={handleSubmit(onSubmit)} style={{ width: '100%' }}>
+      {/* Handle Questionnaire Name and Description */}
+      <QuestionItem elevation={3}>
         <Box sx={{ width: '100%', marginBottom: '1rem' }}>
           <Controller
             render={({ field }) => (
@@ -87,7 +82,7 @@ function QuestionnaireCreate() {
           />
         </Box>
         <Button
-          startIcon={<Create />}
+          startIcon={<Save />}
           disabled={!isDirty || !isValid}
           variant="contained"
           type="submit"
@@ -95,13 +90,9 @@ function QuestionnaireCreate() {
         >
           {buttonText}
         </Button>
-
-        <Button startIcon={<ArrowBack />} variant="contained" onClick={() => navigate('/home')} style={{ marginLeft: '1rem' }}>
-          Go Back
-        </Button>
-      </form>
-    </Container>
+      </QuestionItem>
+    </form>
   );
 }
 
-export default QuestionnaireCreate;
+export default EditHeader;
